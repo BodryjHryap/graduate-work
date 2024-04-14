@@ -5,8 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 @Entity
-@Getter
-@Setter
 @Table(name = "images")
 public class Image {
     @Id
@@ -18,4 +16,44 @@ public class Image {
     @ManyToOne
     @JoinColumn(name = "ad_id")
     private Ad ad;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public Ad getAd() {
+        return ad;
+    }
+
+    public void setAd(Ad ad) {
+        this.ad = ad;
+    }
 }
