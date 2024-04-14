@@ -1,5 +1,6 @@
 package ru.skypro.homework.dto.generatedDto;
 
+import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,7 +18,7 @@ public class AdDto {
   private Integer author = null;
 
   @JsonProperty("image")
-  private String image = null;
+  private List<String> image = null;
 
   @JsonProperty("pk")
   private Integer pk = null;
@@ -47,7 +48,7 @@ public class AdDto {
     this.author = author;
   }
 
-  public AdDto image(String image) {
+  public AdDto image(List<String> image) {
     this.image = image;
     return this;
   }
@@ -58,11 +59,11 @@ public class AdDto {
    **/
   @Schema(description = "ссылка на картинку объявления")
   
-    public String getImage() {
+    public List<String> getImage() {
     return image;
   }
 
-  public void setImage(String image) {
+  public void setImage(List<String> image) {
     this.image = image;
   }
 
