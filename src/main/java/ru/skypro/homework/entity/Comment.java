@@ -7,8 +7,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "comments")
 public class Comment {
     @Id
@@ -20,6 +18,46 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User author;
     @ManyToOne
-    @JoinColumn(name = "ads_id")
-    private Ads ads;
+    @JoinColumn(name = "ad_id")
+    private Ad ad;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public Ad getAd() {
+        return ad;
+    }
+
+    public void setAd(Ad ad) {
+        this.ad = ad;
+    }
 }
