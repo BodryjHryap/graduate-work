@@ -21,6 +21,10 @@ public class Comment {
     @JoinColumn(name = "ad_id")
     private Ad ad;
 
+//    @ManyToOne
+//    @JoinColumn(name = "avatar_id")
+//    private
+
     public Long getId() {
         return id;
     }
