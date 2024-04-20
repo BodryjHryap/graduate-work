@@ -1,7 +1,5 @@
 package ru.skypro.homework.entity;
 
-import lombok.Getter;
-import lombok.Setter;
 import ru.skypro.homework.dto.Role;
 
 import javax.persistence.*;
