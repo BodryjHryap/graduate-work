@@ -1,5 +1,6 @@
 package io.generated.api;
 
+import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.generatedDto.AdDto;
 import ru.skypro.homework.dto.generatedDto.AdsDto;
 import ru.skypro.homework.dto.generatedDto.CommentDto;
@@ -15,11 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.homework.service.AdService;
+import ru.skypro.homework.service.CommentService;
 
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +26,7 @@ import java.io.IOException;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-04-07T11:59:23.949615055Z[GMT]")
+@CrossOrigin(value = "http://localhost:3000")
 @RestController
 public class AdsApiController implements AdsApi {
 
@@ -35,11 +35,15 @@ public class AdsApiController implements AdsApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
+    private final AdService adService;
+    private final CommentService commentService;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public AdsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public AdsApiController(ObjectMapper objectMapper, HttpServletRequest request, AdService adService, CommentService commentService) {
         this.objectMapper = objectMapper;
         this.request = request;
+        this.adService = adService;
+        this.commentService = commentService;
     }
 
     public ResponseEntity<AdDto> addAd(@Parameter(in = ParameterIn.DEFAULT, description = "",schema=@Schema()) @RequestPart(value="properties", required=false) CreateOrUpdateAdDto properties

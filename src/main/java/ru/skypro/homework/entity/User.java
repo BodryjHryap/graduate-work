@@ -1,6 +1,7 @@
 package ru.skypro.homework.entity;
 
 import ru.skypro.homework.dto.Role;
+import ru.skypro.homework.dto.generatedDto.RegisterDto;
 
 import javax.persistence.*;
 import java.util.List;
@@ -92,5 +93,8 @@ public class User {
 
     public void setAdList(List<Ad> adList) {
         this.adList = adList;
+    }
+
+    public void setRole(RegisterDto.RoleEnum role) {
     }
 }
