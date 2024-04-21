@@ -5,15 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.skypro.homework.dto.Role;
+//import ru.skypro.homework.entity.MyUser;
 
 import javax.sql.DataSource;
 
@@ -21,6 +17,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class WebSecurityConfig {
+
+//    private final MyUser myUser;
 
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
@@ -30,6 +28,10 @@ public class WebSecurityConfig {
             "/login",
             "/register"
     };
+
+//    public WebSecurityConfig(MyUser myUser) {
+//        this.myUser = myUser;
+//    }
 
     @Bean
     public JdbcUserDetailsManager userDetailsService(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
@@ -51,6 +53,7 @@ public class WebSecurityConfig {
                                         .mvcMatchers(AUTH_WHITELIST).permitAll()
                                         .mvcMatchers(HttpMethod.GET, "/ads").permitAll()
                                         .mvcMatchers("/users/images/**").permitAll()
+                                        .mvcMatchers("/users/**").permitAll()
                                         .mvcMatchers("/ads/**", "/users/**")
                                         .authenticated())
                 .cors()

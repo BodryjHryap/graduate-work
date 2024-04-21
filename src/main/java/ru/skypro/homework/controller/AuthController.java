@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.homework.dto.Login;
 import ru.skypro.homework.dto.Register;
+import ru.skypro.homework.dto.generatedDto.LoginDto;
 import ru.skypro.homework.dto.generatedDto.RegisterDto;
 import ru.skypro.homework.service.AuthService;
 
@@ -25,8 +26,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Login login) {
-        if (authService.login(login.getUsername(), login.getPassword())) {
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+        if (authService.login(loginDto.getUsername(), loginDto.getPassword())) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

@@ -1,10 +1,14 @@
 package ru.skypro.homework.entity;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 import ru.skypro.homework.dto.Role;
 
 import javax.persistence.*;
 
 @Entity
+@Component
+@SessionScope()
 @Table(name = "authorities")
 public class Authorities {
     @Id
@@ -28,5 +32,14 @@ public class Authorities {
 
     public void setAuthority(Role authority) {
         this.authority = authority;
+    }
+
+    @Override
+    public String toString() {
+        return "Authorities{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", authority=" + authority +
+                '}';
     }
 }

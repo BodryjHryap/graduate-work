@@ -23,6 +23,8 @@ public class User {
     @OneToMany(mappedBy = "author")
     private List<Ad> adList;
 
+    private boolean enabled;
+
     public Long getId() {
         return id;
     }
@@ -96,5 +98,13 @@ public class User {
     }
 
     public void setRole(RegisterDto.RoleEnum role) {
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
