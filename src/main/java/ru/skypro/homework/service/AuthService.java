@@ -12,6 +12,5 @@ public interface AuthService {
 
     boolean register(RegisterDto registerDto);
 
-//    void changePassword(NewPasswordDto newPasswordDto, Authorities authorities);
     void changePassword(NewPasswordDto newPasswordDto);
 }
