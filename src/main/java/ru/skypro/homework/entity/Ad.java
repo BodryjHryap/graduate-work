@@ -18,8 +18,8 @@ public class Ad {
     private User author;
     @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
     private List<Comment> comments;
-    @OneToMany(mappedBy = "ad", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Image> images;
+    @OneToOne
+    private Image image;
 
     public Long getId() {
         return id;
@@ -69,11 +69,11 @@ public class Ad {
         this.comments = comments;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public Image getImage() {
+        return image;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

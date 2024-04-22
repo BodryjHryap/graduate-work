@@ -53,7 +53,7 @@ public class AdController {
                             responseCode = "201",
                             content = @Content(
                                     mediaType = MediaType.ALL_VALUE,
-                                    schema = @Schema(implementation = AdsDto.class))
+                                    schema = @Schema(implementation = AdDto.class))
                     ),
                     @ApiResponse(responseCode = "401", content = @Content),
                     @ApiResponse(responseCode = "403", content = @Content),

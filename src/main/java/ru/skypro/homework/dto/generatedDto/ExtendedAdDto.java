@@ -30,7 +30,7 @@ public class ExtendedAdDto {
   private String email = null;
 
   @JsonProperty("image")
-  private List<String> image = null;
+  private String image = null;
 
   @JsonProperty("phone")
   private String phone = null;
@@ -136,7 +136,7 @@ public class ExtendedAdDto {
     this.email = email;
   }
 
-  public ExtendedAdDto image(List<String> image) {
+  public ExtendedAdDto image(String image) {
     this.image = image;
     return this;
   }
@@ -147,11 +147,11 @@ public class ExtendedAdDto {
    **/
   @Schema(description = "ссылка на картинку объявления")
   
-    public List<String> getImage() {
+    public String getImage() {
     return image;
   }
 
-  public void setImage(List<String> image) {
+  public void setImage(String image) {
     this.image = image;
   }
 

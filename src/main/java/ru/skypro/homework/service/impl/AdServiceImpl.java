@@ -47,7 +47,7 @@ public class AdServiceImpl implements AdService {
         Ad savedAd = adRepository.save(ad);
 
         Image adImage = imageService.createImage(image, savedAd);
-        savedAd.setImages(List.of(adImage));
+        savedAd.setImage(adImage);
         return adMapper.adToAdDto(savedAd);
     }
 }

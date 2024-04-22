@@ -18,7 +18,7 @@ public class AdDto {
   private Integer author = null;
 
   @JsonProperty("image")
-  private List<String> image = null;
+  private String image = null;
 
   @JsonProperty("pk")
   private Integer pk = null;
@@ -48,7 +48,7 @@ public class AdDto {
     this.author = author;
   }
 
-  public AdDto image(List<String> image) {
+  public AdDto image(String image) {
     this.image = image;
     return this;
   }
@@ -59,11 +59,11 @@ public class AdDto {
    **/
   @Schema(description = "ссылка на картинку объявления")
   
-    public List<String> getImage() {
+    public String getImage() {
     return image;
   }
 
-  public void setImage(List<String> image) {
+  public void setImage(String image) {
     this.image = image;
   }
 

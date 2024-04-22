@@ -10,8 +10,7 @@ public class Image {
     private Long fileSize;
     private String mediaType;
     private byte[] data;
-    @ManyToOne
-    @JoinColumn(name = "ad_id")
+    @OneToOne(mappedBy = "image", cascade = CascadeType.REMOVE)
     private Ad ad;
 
     public Long getId() {
