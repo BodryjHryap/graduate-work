@@ -7,14 +7,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.generatedDto.NewPasswordDto;
 import ru.skypro.homework.dto.generatedDto.UserDto;
-//import ru.skypro.homework.entity.MyUser;
 import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.UserService;
 
@@ -50,7 +46,7 @@ public class UserController {
     @Operation(summary = "getUser",
             responses = {
                     @ApiResponse(responseCode = "200", content = @Content(
-                                    schema = @Schema(implementation = UserDto.class))
+                            schema = @Schema(implementation = UserDto.class))
                     ),
                     @ApiResponse(responseCode = "404", content = @Content)
             })
@@ -64,8 +60,8 @@ public class UserController {
     @Operation(summary = "updateUser",
             responses = {
                     @ApiResponse(responseCode = "200", content = @Content(
-                                    mediaType = MediaType.ALL_VALUE,
-                                    schema = @Schema(implementation = UserDto.class))
+                            mediaType = MediaType.ALL_VALUE,
+                            schema = @Schema(implementation = UserDto.class))
                     ),
                     @ApiResponse(responseCode = "204", content = @Content),
                     @ApiResponse(responseCode = "401", content = @Content),
@@ -77,6 +73,7 @@ public class UserController {
         log.info("Was invoked update user method");
         return ResponseEntity.ok(userService.updateUser(userDto));
     }
+
     @Operation(summary = "updateUserImage",
             responses = {
                     @ApiResponse(responseCode = "200", content = @Content),
