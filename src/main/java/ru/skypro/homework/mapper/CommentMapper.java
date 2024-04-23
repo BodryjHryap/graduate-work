@@ -30,6 +30,6 @@ public interface CommentMapper {
 
     @Named("getImageLink")
     default String getImageLink(Avatar avatar) {
-        return "/users/avatar/" + avatar.getId();
+        return (avatar == null) ? null : "/users/avatar/" + avatar.getId();
     }
 }
