@@ -32,7 +32,6 @@ public class WebSecurityConfig {
         JdbcUserDetailsManager jdbcUserDetailsManager = auth.jdbcAuthentication()
                 .passwordEncoder(new BCryptPasswordEncoder()).dataSource(dataSource)
                 .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
-//                .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username = ?")
                 .authoritiesByUsernameQuery("SELECT username, role FROM users WHERE username = ?")
                 .getUserDetailsService();
         return jdbcUserDetailsManager;
