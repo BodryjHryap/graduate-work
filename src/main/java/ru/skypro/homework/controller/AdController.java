@@ -34,10 +34,10 @@ public class AdController {
     }
 
     @Operation(summary = "getAds", responses = {
-                    @ApiResponse(responseCode = "200", content = @Content(
-                            schema = @Schema(implementation = AdsDto.class))),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+            @ApiResponse(responseCode = "200", content = @Content(
+                    schema = @Schema(implementation = AdsDto.class))),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @GetMapping
     public ResponseEntity<AdsDto> getAds() {
         log.info("Was invoked get all ads method");
@@ -45,20 +45,18 @@ public class AdController {
     }
 
     @Operation(summary = "addAd", responses = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            content = @Content(
-                                    mediaType = MediaType.ALL_VALUE,
-                                    schema = @Schema(implementation = AdDto.class))
-                    ),
-                    @ApiResponse(responseCode = "401", content = @Content),
-                    @ApiResponse(responseCode = "403", content = @Content),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+            @ApiResponse(responseCode = "201", content = @Content(
+                    mediaType = MediaType.ALL_VALUE,
+                    schema = @Schema(implementation = AdDto.class))
+            ),
+            @ApiResponse(responseCode = "401", content = @Content),
+            @ApiResponse(responseCode = "403", content = @Content),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdDto> addAd(@RequestPart("properties") CreateOrUpdateAdDto createOrUpdateAdDto,
-                                        @RequestPart("image") MultipartFile image,
-                                        Authentication authentication
+                                       @RequestPart("image") MultipartFile image,
+                                       Authentication authentication
     ) {
         log.info("Was invoked add ad method");
         return ResponseEntity.status(HttpStatus.CREATED).body(adService.createAd(createOrUpdateAdDto, image, authentication));
@@ -70,26 +68,22 @@ public class AdController {
             @ApiResponse(responseCode = "403", content = @Content)
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeAds(@PathVariable int id,
-                                          Authentication authentication) {
+    public ResponseEntity<Void> removeAds(@PathVariable int id, Authentication authentication) {
         log.info("Was invoked delete ad by id = {} method", id);
         adService.removeAd(id, authentication);
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "updateAds",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            content = @Content(
-                                    mediaType = MediaType.ALL_VALUE,
-                                    schema = @Schema(implementation = AdsDto.class)
-                            )
-                    ),
-                    @ApiResponse(responseCode = "401", content = @Content),
-                    @ApiResponse(responseCode = "403", content = @Content),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+    @Operation(summary = "updateAd", responses = {
+            @ApiResponse(responseCode = "200",
+                    content = @Content(
+                            mediaType = MediaType.ALL_VALUE,
+                            schema = @Schema(implementation = AdsDto.class)
+                    )),
+            @ApiResponse(responseCode = "401", content = @Content),
+            @ApiResponse(responseCode = "403", content = @Content),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @PatchMapping("/{id}")
     public ResponseEntity<AdDto> updateAds(@PathVariable int id,
                                            @RequestBody CreateOrUpdateAdDto createOrUpdateAdDto,
@@ -99,12 +93,10 @@ public class AdController {
     }
 
     @Operation(summary = "getFullAd", responses = {
-            @ApiResponse(responseCode = "200",
-                    content = @Content(
-                            mediaType = MediaType.ALL_VALUE,
-                            schema = @Schema(implementation = ExtendedAdDto.class)
-                    )
-            ),
+            @ApiResponse(responseCode = "200", content = @Content(
+                    mediaType = MediaType.ALL_VALUE,
+                    schema = @Schema(implementation = ExtendedAdDto.class)
+            )),
             @ApiResponse(responseCode = "404", content = @Content)
     })
     @GetMapping("/{id}")
@@ -114,16 +106,14 @@ public class AdController {
     }
 
     @Operation(summary = "getAdsMe", responses = {
-                    @ApiResponse(responseCode = "200",
-                            content = @Content(
-                                    mediaType = MediaType.ALL_VALUE,
-                                    schema = @Schema(implementation = AdsDto.class)
-                            )
-                    ),
-                    @ApiResponse(responseCode = "401", content = @Content),
-                    @ApiResponse(responseCode = "403", content = @Content),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+            @ApiResponse(responseCode = "200", content = @Content(
+                    mediaType = MediaType.ALL_VALUE,
+                    schema = @Schema(implementation = AdsDto.class)
+            )),
+            @ApiResponse(responseCode = "401", content = @Content),
+            @ApiResponse(responseCode = "403", content = @Content),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @GetMapping("/me")
     public ResponseEntity<AdsDto> getAdsMe(Authentication authentication) {
         log.info("Was invoked get all ads for current user = {} method", authentication.getName());
@@ -132,34 +122,31 @@ public class AdController {
     }
 
     @Operation(summary = "updateAdImage", responses = {
-                    @ApiResponse(responseCode = "200",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
-                                    schema = @Schema(implementation = byte[].class)
-                            )),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+            @ApiResponse(responseCode = "200", content = @Content(
+                    mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
+                    schema = @Schema(implementation = byte[].class)
+            )),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @PreAuthorize("isAuthenticated()")
-    @PatchMapping (value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> updateAdsImage(@PathVariable Long id,
                                                  @RequestParam MultipartFile image,
-                                                 Authentication authentication){
+                                                 Authentication authentication) {
         log.info("Was invoked updateAdsImage method from {}", ImageController.class.getSimpleName());
         byte[] imageBytes = imageService.updateAdImage(id, image, authentication);
         return ResponseEntity.ok(imageBytes);
     }
 
     @Operation(summary = "addComments", responses = {
-                    @ApiResponse(responseCode = "200",
-                            content = @Content(
-                                    mediaType = MediaType.ALL_VALUE,
-                                    schema = @Schema(implementation = CommentDto.class)
-                            )
-                    ),
-                    @ApiResponse(responseCode = "401", content = @Content),
-                    @ApiResponse(responseCode = "403", content = @Content),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+            @ApiResponse(responseCode = "200", content = @Content(
+                    mediaType = MediaType.ALL_VALUE,
+                    schema = @Schema(implementation = CommentDto.class)
+            )),
+            @ApiResponse(responseCode = "401", content = @Content),
+            @ApiResponse(responseCode = "403", content = @Content),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @PostMapping("/{ad_pk}/comments")
     public ResponseEntity<CommentDto> addComments(@PathVariable(name = "ad_pk") long adPk,
                                                   @RequestBody CommentDto commentDto,
@@ -170,14 +157,12 @@ public class AdController {
     }
 
     @Operation(summary = "getComments", responses = {
-                    @ApiResponse(responseCode = "200",
-                            content = @Content(
-                                    mediaType = MediaType.ALL_VALUE,
-                                    schema = @Schema(implementation = AdsDto.class)
-                            )
-                    ),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+            @ApiResponse(responseCode = "200", content = @Content(
+                    mediaType = MediaType.ALL_VALUE,
+                    schema = @Schema(implementation = AdsDto.class)
+            )),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @GetMapping("/{ad_pk}/comments")
     public ResponseEntity<CommentsDto> getComments(@PathVariable(name = "ad_pk") long adPk) {
         log.info("Was invoked get all comments for ad = {} method", adPk);
@@ -185,30 +170,29 @@ public class AdController {
     }
 
     @Operation(summary = "deleteComment", responses = {
-                    @ApiResponse(responseCode = "200", content = @Content),
-                    @ApiResponse(responseCode = "401", content = @Content),
-                    @ApiResponse(responseCode = "403", content = @Content),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+            @ApiResponse(responseCode = "200", content = @Content),
+            @ApiResponse(responseCode = "401", content = @Content),
+            @ApiResponse(responseCode = "403", content = @Content),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @DeleteMapping("{ad_pk}/comments/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable("ad_pk") long adPk,
-                                               @PathVariable int id,
-                                               Authentication authentication) {
+                                              @PathVariable int id,
+                                              Authentication authentication) {
         log.info("Was invoked delete ad's comment by id = {} method", id);
         commentService.deleteComment(adPk, id, authentication);
         return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "updateComments", responses = {
-                    @ApiResponse(responseCode = "200",
-                            content = @Content(
-                                    mediaType = MediaType.ALL_VALUE,
-                                    schema = @Schema(implementation = CommentDto.class)
-                            )),
-                    @ApiResponse(responseCode = "401", content = @Content),
-                    @ApiResponse(responseCode = "403", content = @Content),
-                    @ApiResponse(responseCode = "404", content = @Content)
-            })
+            @ApiResponse(responseCode = "200", content = @Content(
+                    mediaType = MediaType.ALL_VALUE,
+                    schema = @Schema(implementation = CommentDto.class)
+            )),
+            @ApiResponse(responseCode = "401", content = @Content),
+            @ApiResponse(responseCode = "403", content = @Content),
+            @ApiResponse(responseCode = "404", content = @Content)
+    })
     @PreAuthorize("isAuthenticated()")
     @PatchMapping("{ad_pk}/comments/{id}")
     public ResponseEntity<CommentDto> updateComments(@PathVariable("ad_pk") long adPk,

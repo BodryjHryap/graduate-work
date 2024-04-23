@@ -6,9 +6,7 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.generatedDto.NewPasswordDto;
 import ru.skypro.homework.dto.generatedDto.RegisterDto;
-import ru.skypro.homework.entity.Authorities;
 import ru.skypro.homework.entity.User;
-import ru.skypro.homework.repository.AuthoritiesRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AuthService;
 
@@ -20,13 +18,11 @@ public class AuthServiceImpl implements AuthService {
     private final UserDetailsManager manager;
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
-    private final AuthoritiesRepository authoritiesRepository;
 
-    public AuthServiceImpl(UserDetailsManager manager, PasswordEncoder encoder, UserRepository userRepository, AuthoritiesRepository authoritiesRepository) {
+    public AuthServiceImpl(UserDetailsManager manager, PasswordEncoder encoder, UserRepository userRepository) {
         this.manager = manager;
         this.encoder = encoder;
         this.userRepository = userRepository;
-        this.authoritiesRepository = authoritiesRepository;
     }
 
     @Override
@@ -55,11 +51,6 @@ public class AuthServiceImpl implements AuthService {
         user.setEnabled(true);
 
         userRepository.save(user);
-
-        Authorities authorities = new Authorities();
-        authorities.setUsername(registerDto.getUsername());
-        authorities.setAuthority(registerDto.getRole());
-        authoritiesRepository.save(authorities);
         return true;
     }
 
@@ -67,5 +58,4 @@ public class AuthServiceImpl implements AuthService {
     public void changePassword(NewPasswordDto newPasswordDto) {
         manager.changePassword(newPasswordDto.getCurrentPassword(), encoder.encode(newPasswordDto.getNewPassword()));
     }
-
 }

@@ -2,8 +2,6 @@ package ru.skypro.homework.dto.generatedDto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import ru.skypro.homework.dto.Role;
@@ -31,37 +29,6 @@ public class UserDto {
   @JsonProperty("phone")
   private String phone = null;
 
-  /**
-   * роль пользователя
-   */
-//  private Role role;
-//
-//    USER("USER"),
-//
-//    ADMIN("ADMIN");
-//
-//    private String value;
-//
-//    RoleEnum(String value) {
-//      this.value = value;
-//    }
-//
-//    @Override
-//    @JsonValue
-//    public String toString() {
-//      return String.valueOf(value);
-//    }
-//
-//    @JsonCreator
-//    public static RoleEnum fromValue(String text) {
-//      for (RoleEnum b : RoleEnum.values()) {
-//        if (String.valueOf(b.value).equals(text)) {
-//          return b;
-//        }
-//      }
-//      return null;
-//    }
-//  }
   @JsonProperty("role")
   private Role role = null;
 
