@@ -38,7 +38,6 @@ public class UserController {
     public ResponseEntity<Void> setPassword(@RequestBody NewPasswordDto newPasswordDto) {
         log.info("Was invoked set password for user method");
         authService.changePassword(newPasswordDto);
-        System.out.println("sdfddd");
         return ResponseEntity.ok().build();
     }
 
