@@ -38,7 +38,7 @@ public interface AdMapper {
 
     @Named("getImageLink")
     default String getImageLink(Image image) {
-        return "/image" + image.getId();
+        return "/image/" + image.getId();
 //        return (image == null) ? null : "/image" + image.getId();
 //                image.stream().map(i -> "/image/" + i.getId()).collect(Collectors.toList());
     }

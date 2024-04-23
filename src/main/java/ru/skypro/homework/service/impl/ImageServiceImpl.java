@@ -6,6 +6,7 @@ import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.exception.EmptyFileException;
 import ru.skypro.homework.exception.ImageCanNotReadEception;
+import ru.skypro.homework.exception.ImageNotFoundException;
 import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
@@ -31,6 +32,11 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.save(image);
     }
 
+    @Override
+    public byte[] getAdImage(Long id) {
+        return getImageFromDB(id).getData();
+    }
+
     private void fileToImage(MultipartFile file, Image image) {
         if (file.isEmpty()) {
             throw new EmptyFileException();
@@ -45,4 +51,10 @@ public class ImageServiceImpl implements ImageService {
         image.setFileSize(file.getSize());
         image.setMediaType(file.getContentType());
     }
+
+    private Image getImageFromDB(long id) {
+        return imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
+    }
+
+
 }

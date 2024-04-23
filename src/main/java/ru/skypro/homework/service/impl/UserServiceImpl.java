@@ -5,15 +5,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.dto.generatedDto.UserDto;
 import ru.skypro.homework.entity.Avatar;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.EmptyFileException;
+import ru.skypro.homework.exception.UserHasNoRightsException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.AvatarRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.UserService;
+import ru.skypro.homework.exception.ImageNotFoundException;
 
 import java.io.IOException;
 
@@ -79,4 +82,20 @@ public class UserServiceImpl implements UserService {
         avatarRepository.save(avatar);
     }
 
+    @Override
+    public byte[] getUserAvatar(long id) {
+        Avatar avatar = avatarRepository.findById(id).orElseThrow(ImageNotFoundException::new);
+        return avatar.getImage();
+    }
+
+    @Override
+    public void checkUserHasPermit(Authentication authentication, String username) {
+        boolean matchUser = authentication.getName().equals(username);
+        boolean userIsAdmin = authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().contains(Role.ADMIN.name()));
+
+        if (!(userIsAdmin || matchUser)){
+            throw new UserHasNoRightsException("Current user has no rights to perform this operation.");
+        }
+    }
 }

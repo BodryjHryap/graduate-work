@@ -6,4 +6,6 @@ import ru.skypro.homework.entity.Image;
 
 public interface ImageService {
     Image createImage(MultipartFile image, Ad ad);
+
+    byte[] getAdImage(Long id);
 }

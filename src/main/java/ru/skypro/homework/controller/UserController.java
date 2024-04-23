@@ -28,8 +28,7 @@ public class UserController {
         this.authService = authService;
     }
 
-    @Operation(summary = "setPassword",
-            responses = {
+    @Operation(summary = "setPassword", responses = {
                     @ApiResponse(responseCode = "200", content = @Content),
                     @ApiResponse(responseCode = "401", content = @Content),
                     @ApiResponse(responseCode = "403", content = @Content),
@@ -43,8 +42,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "getUser",
-            responses = {
+    @Operation(summary = "getUser", responses = {
                     @ApiResponse(responseCode = "200", content = @Content(
                             schema = @Schema(implementation = UserDto.class))
                     ),
@@ -57,8 +55,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAuth());
     }
 
-    @Operation(summary = "updateUser",
-            responses = {
+    @Operation(summary = "updateUser", responses = {
                     @ApiResponse(responseCode = "200", content = @Content(
                             mediaType = MediaType.ALL_VALUE,
                             schema = @Schema(implementation = UserDto.class))
@@ -74,8 +71,7 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(userDto));
     }
 
-    @Operation(summary = "updateUserImage",
-            responses = {
+    @Operation(summary = "updateUserImage", responses = {
                     @ApiResponse(responseCode = "200", content = @Content),
                     @ApiResponse(responseCode = "404", content = @Content)
             })
@@ -84,5 +80,13 @@ public class UserController {
         log.info("Was invoked update user image method");
         userService.updateUserAvatar(userService.getAuth().getEmail(), image);
         return ResponseEntity.ok().build();
+    }
+    @Operation(summary = "getUserAvatar", responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404", content = @Content)
+            })
+    @GetMapping(value = "/avatar/{id}", produces = {MediaType.IMAGE_PNG_VALUE})
+    public ResponseEntity<byte[]> getUserAvatar(@PathVariable long id) {
+        return ResponseEntity.ok(userService.getUserAvatar(id));
     }
 }

@@ -7,9 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.generatedDto.AdDto;
 import ru.skypro.homework.dto.generatedDto.AdsDto;
 import ru.skypro.homework.dto.generatedDto.CreateOrUpdateAdDto;
+import ru.skypro.homework.dto.generatedDto.ExtendedAdDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
+import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.mapper.AdMapper;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.service.AdService;
@@ -45,9 +47,26 @@ public class AdServiceImpl implements AdService {
         Ad ad = adMapper.createOrUpdateAdDtoToAd(createAdDto);
         ad.setAuthor(currentUser);
         Ad savedAd = adRepository.save(ad);
-
         Image adImage = imageService.createImage(image, savedAd);
         savedAd.setImage(adImage);
         return adMapper.adToAdDto(savedAd);
+    }
+
+    @Override
+    public Ad getAdById(long id) {
+        return adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
+    }
+
+    @Override
+    public void removeAd(long id, Authentication authentication) {
+        Ad ad = getAdById(id);
+        userService.checkUserHasPermit(authentication, ad.getAuthor().getUsername());
+        adRepository.delete(ad);
+    }
+
+    @Override
+    public ExtendedAdDto getFullAdById(long id) {
+        Ad ad = getAdById(id);
+        return adMapper.adToExtendedAdDto(ad);
     }
 }
