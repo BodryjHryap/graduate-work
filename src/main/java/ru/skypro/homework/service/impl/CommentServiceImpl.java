@@ -7,6 +7,7 @@ import ru.skypro.homework.dto.generatedDto.CommentsDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Comment;
 import ru.skypro.homework.entity.User;
+import ru.skypro.homework.exception.CommentNotFoundException;
 import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.repository.CommentRepository;
 import ru.skypro.homework.service.AdService;
@@ -49,4 +50,22 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> comments = ad.getComments();
         return commentMapper.commentListToCommentsDto(comments.size(), comments);
     }
+
+    @Override
+    public void deleteComment(long adPk, long id, Authentication authentication) {
+        Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+        userService.checkUserHasPermit(authentication, comment.getAuthor().getUsername());
+        commentRepository.delete(comment);
+    }
+
+    @Override
+    public CommentDto updateComment(long adPk, long id, CommentDto commentDto, Authentication authentication) {
+        Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+        userService.checkUserHasPermit(authentication, comment.getAuthor().getUsername());
+        comment.setText(commentDto.getText());
+        commentRepository.save(comment);
+        return commentMapper.commentToCommentDto(comment);
+    }
+
+
 }

@@ -69,4 +69,24 @@ public class AdServiceImpl implements AdService {
         Ad ad = getAdById(id);
         return adMapper.adToExtendedAdDto(ad);
     }
+
+    @Override
+    public AdDto updateAdById(long id, CreateOrUpdateAdDto createOrUpdateAdDto, Authentication authentication) {
+        Ad oldAd = getAdById(id);
+        userService.checkUserHasPermit(authentication, oldAd.getAuthor().getUsername());
+        Ad infoToUpdate = adMapper.createOrUpdateAdDtoToAd(createOrUpdateAdDto);
+
+        oldAd.setPrice(infoToUpdate.getPrice());
+        oldAd.setTitle(infoToUpdate.getTitle());
+        oldAd.setDescription(infoToUpdate.getDescription());
+
+        Ad updatedAd = adRepository.save(oldAd);
+        return adMapper.adToAdDto(updatedAd);
+    }
+
+    @Override
+    public AdsDto getAllAdsForUser(String username) {
+        List<Ad> userAdsList = adRepository.findAdByAuthorUsername(username);
+        return adMapper.adListToAdsDto(userAdsList.size(), userAdsList);
+    }
 }

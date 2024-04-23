@@ -8,4 +8,7 @@ public interface CommentService {
 
     CommentDto createNewComment(Long adId, CommentDto commentDto, Authentication authentication);
     CommentsDto getAllCommentsForAd(Long adsId);
+    void deleteComment(long adPk, long id,  Authentication authentication);
+    CommentDto updateComment(long adPk, long id, CommentDto commentDto, Authentication authentication);
+
 }

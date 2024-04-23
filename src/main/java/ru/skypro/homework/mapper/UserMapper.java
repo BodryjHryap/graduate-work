@@ -17,6 +17,6 @@ public interface UserMapper {
 
     @Named("getUserAvatarLink")
     default String getUserAvatarLink(Avatar avatar) {
-        return (avatar == null) ? null : "/users/avatar1/" + avatar.getId();
+        return (avatar == null) ? null : "/users/avatar/" + avatar.getId();
     }
 }

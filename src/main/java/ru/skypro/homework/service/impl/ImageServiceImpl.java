@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.impl;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.entity.Ad;
@@ -35,6 +36,15 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public byte[] getAdImage(Long id) {
         return getImageFromDB(id).getData();
+    }
+
+    @Override
+    public byte[] updateAdImage(long id, MultipartFile file, Authentication authentication) {
+        Image image = getImageFromDB(id);
+        userService.checkUserHasPermit(authentication, image.getAd().getAuthor().getUsername());
+        fileToImage(file, image);
+        Image savedImage = imageRepository.save(image);
+        return savedImage.getData();
     }
 
     private void fileToImage(MultipartFile file, Image image) {

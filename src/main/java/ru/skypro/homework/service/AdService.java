@@ -19,4 +19,8 @@ public interface AdService {
     AdsDto getAllAds();
 
     ExtendedAdDto getFullAdById(long id);
+
+    AdDto updateAdById(long id, CreateOrUpdateAdDto createOrUpdateAdDto, Authentication authentication);
+
+    AdsDto getAllAdsForUser(String username);
 }
