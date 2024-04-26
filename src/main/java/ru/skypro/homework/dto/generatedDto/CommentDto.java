@@ -23,7 +23,7 @@ public class CommentDto {
   private String authorFirstName = null;
 
   @JsonProperty("createdAt")
-  private Long createdAt = null;
+  private String createdAt = null;
 
   @JsonProperty("pk")
   private Integer pk = null;
@@ -88,22 +88,22 @@ public class CommentDto {
     this.authorFirstName = authorFirstName;
   }
 
-  public CommentDto createdAt(Long createdAt) {
+  public CommentDto createdAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
 
   /**
-   * дата и время создания комментария в миллисекундах с 00:00:00 01.01.1970
+   * дата и время создания комментария0
    * @return createdAt
    **/
-  @Schema(description = "дата и время создания комментария в миллисекундах с 00:00:00 01.01.1970")
+  @Schema(description = "дата и время создания комментария")
   
-    public Long getCreatedAt() {
+    public String getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(Long createdAt) {
+  public void setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
   }
 

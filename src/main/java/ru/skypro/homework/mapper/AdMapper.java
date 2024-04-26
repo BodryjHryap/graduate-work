@@ -15,11 +15,12 @@ import java.util.stream.Collectors;
 public interface AdMapper {
     @Mapping(source = "author", target = "author.id")
     @Mapping(source = "pk", target = "id")
+    @Mapping(target = "image", ignore = true)
     Ad adDtoToAd(AdDto adDto);
 
     @Mapping(source = "author.id", target = "author")
     @Mapping(source = "id", target = "pk")
-    @Mapping(source = "images", target = "image", qualifiedByName = "getListOfImageLinks")
+    @Mapping(source = "image", target = "image", qualifiedByName = "getImageLink")
     AdDto adToAdDto(Ad ad);
 
     Ad createOrUpdateAdDtoToAd(CreateOrUpdateAdDto createOrUpdateAdDto);
@@ -28,16 +29,15 @@ public interface AdMapper {
     @Mapping(source = "author.username", target = "email")
     @Mapping(source = "author.phone", target = "phone")
     @Mapping(source = "id", target = "pk")
-    @Mapping(source = "images", target = "image", qualifiedByName = "getListOfImageLinks")
+    @Mapping(source = "image", target = "image", qualifiedByName = "getImageLink")
     ExtendedAdDto adToExtendedAdDto(Ad ad);
 
     @Mapping(source = "size", target = "count")
     @Mapping(source = "adList", target = "results")
     AdsDto adListToAdsDto(Integer size, List<Ad> adList);
 
-    @Named("getListOfImageLinks")
-    default List<String> getListOfImageLinks(List<Image> images) {
-        return (images == null || images.isEmpty()) ? null :
-                images.stream().map(i -> "/image/" + i.getId()).collect(Collectors.toList());
+    @Named("getImageLink")
+    default String getImageLink(Image image) {
+        return "/image/" + image.getId();
     }
 }

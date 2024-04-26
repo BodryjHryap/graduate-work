@@ -2,10 +2,9 @@ package ru.skypro.homework.dto.generatedDto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
+import ru.skypro.homework.dto.Role;
 
 /**
  * User
@@ -30,38 +29,8 @@ public class UserDto {
   @JsonProperty("phone")
   private String phone = null;
 
-  /**
-   * роль пользователя
-   */
-  public enum RoleEnum {
-    USER("USER"),
-    
-    ADMIN("ADMIN");
-
-    private String value;
-
-    RoleEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static RoleEnum fromValue(String text) {
-      for (RoleEnum b : RoleEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
   @JsonProperty("role")
-  private RoleEnum role = null;
+  private Role role = null;
 
   @JsonProperty("image")
   private String image = null;
@@ -161,7 +130,7 @@ public class UserDto {
     this.phone = phone;
   }
 
-  public UserDto role(RoleEnum role) {
+  public UserDto role(Role role) {
     this.role = role;
     return this;
   }
@@ -172,11 +141,11 @@ public class UserDto {
    **/
   @Schema(description = "роль пользователя")
   
-    public RoleEnum getRole() {
+    public Role getRole() {
     return role;
   }
 
-  public void setRole(RoleEnum role) {
+  public void setRole(Role role) {
     this.role = role;
   }
 

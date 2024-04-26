@@ -1,8 +1,5 @@
 package ru.skypro.homework.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -20,6 +17,9 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "ad_id")
     private Ad ad;
+
+    @ManyToOne
+    @JoinColumn(name = "avatar_id")
 
     public Long getId() {
         return id;

@@ -1,8 +1,7 @@
 package ru.skypro.homework.entity;
 
-import lombok.Getter;
-import lombok.Setter;
 import ru.skypro.homework.dto.Role;
+import ru.skypro.homework.dto.generatedDto.RegisterDto;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,6 +22,8 @@ public class User {
     private Avatar avatar;
     @OneToMany(mappedBy = "author")
     private List<Ad> adList;
+
+    private boolean enabled;
 
     public Long getId() {
         return id;
@@ -94,5 +95,16 @@ public class User {
 
     public void setAdList(List<Ad> adList) {
         this.adList = adList;
+    }
+
+    public void setRole(RegisterDto.RoleEnum role) {
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

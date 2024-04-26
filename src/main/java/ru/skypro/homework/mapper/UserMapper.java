@@ -8,8 +8,6 @@ import ru.skypro.homework.entity.User;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserMapper {
-    @Mapping(source = "email", target = "username")
-    User userDtoToUser(UserDto userDto);
 
     @Mapping(source = "username", target = "email")
     @Mapping(source = "avatar", target = "image", qualifiedByName = "getUserAvatarLink")

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
+import ru.skypro.homework.dto.Role;
 
 import javax.validation.constraints.*;
 
@@ -63,7 +64,7 @@ public class RegisterDto {
     }
   }
   @JsonProperty("role")
-  private RoleEnum role = null;
+  private Role role = null;
 
   public RegisterDto username(String username) {
     this.username = username;
@@ -160,7 +161,7 @@ public class RegisterDto {
     this.phone = phone;
   }
 
-  public RegisterDto role(RoleEnum role) {
+  public RegisterDto role(Role role) {
     this.role = role;
     return this;
   }
@@ -171,11 +172,11 @@ public class RegisterDto {
    **/
   @Schema(description = "роль пользователя")
   
-    public RoleEnum getRole() {
+    public Role getRole() {
     return role;
   }
 
-  public void setRole(RoleEnum role) {
+  public void setRole(Role role) {
     this.role = role;
   }
 
