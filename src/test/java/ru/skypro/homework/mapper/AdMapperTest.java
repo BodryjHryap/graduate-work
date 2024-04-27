@@ -7,6 +7,7 @@ import ru.skypro.homework.dto.generatedDto.CreateOrUpdateAdDto;
 import ru.skypro.homework.dto.generatedDto.ExtendedAdDto;
 import ru.skypro.homework.dto.generatedDto.AdsDto;
 import ru.skypro.homework.entity.Ad;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 
 import java.math.BigDecimal;
@@ -20,6 +21,8 @@ public class AdMapperTest {
     @Test
     public void shouldMapAdToAdDto() {
         //given
+        Image image = new Image();
+        image.setId(1L);
         User testUser = new User();
         testUser.setId(42L);
         Ad ad = new Ad();
@@ -27,6 +30,9 @@ public class AdMapperTest {
         ad.setPrice(new BigDecimal(10));
         ad.setTitle("Test ads");
         ad.setAuthor(testUser);
+        ad.setImage(image);
+
+
 
         //when
         AdDto adDto = adMapper.adToAdDto(ad);
@@ -35,7 +41,7 @@ public class AdMapperTest {
         //then
         assertThat(adDto).isNotNull();
         assertThat(adDto.getAuthor()).isEqualTo(testUser.getId().intValue());
-        assertThat(adDto.getImage()).isNull();
+        assertThat(adDto.getImage()).isEqualTo("/image/" + image.getId());
         assertThat(adDto.getPk()).isEqualTo(ad.getId().intValue());
         assertThat(adDto.getPrice()).isEqualTo(ad.getPrice().intValue());
         assertThat(adDto.getTitle()).isEqualTo(ad.getTitle());
@@ -68,6 +74,8 @@ public class AdMapperTest {
     @Test
     public void shouldMapAdsListToAdsDto() {
         //given
+        Image image = new Image();
+        image.setId(1L);
         User testUser = new User();
         testUser.setId(42L);
         Ad ad1 = new Ad();
@@ -75,11 +83,13 @@ public class AdMapperTest {
         ad1.setPrice(new BigDecimal(10));
         ad1.setTitle("Test ads");
         ad1.setAuthor(testUser);
+        ad1.setImage(image);
         Ad ad2 = new Ad();
         ad2.setId(2L);
         ad2.setPrice(new BigDecimal(20));
         ad2.setTitle("Test ads 2");
         ad2.setAuthor(testUser);
+        ad2.setImage(image);
         List<Ad> adList = List.of(ad1, ad2);
 
         //when
@@ -126,6 +136,9 @@ public class AdMapperTest {
         ad.setPrice(new BigDecimal(10));
         ad.setTitle("Test ads");
         ad.setAuthor(testUser);
+        Image image = new Image();
+        image.setId(1L);
+        ad.setImage(image);
 
         //when
         ExtendedAdDto extendedAdDto = adMapper.adToExtendedAdDto(ad);

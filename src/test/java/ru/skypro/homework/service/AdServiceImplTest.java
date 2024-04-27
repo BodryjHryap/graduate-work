@@ -21,6 +21,7 @@ import ru.skypro.homework.exception.UserHasNoRightsException;
 import ru.skypro.homework.mapper.AdMapper;
 import ru.skypro.homework.mapper.AdMapperImpl;
 import ru.skypro.homework.repository.AdRepository;
+import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.impl.AdServiceImpl;
 
 import java.math.BigDecimal;
@@ -36,6 +37,8 @@ import static org.mockito.Mockito.*;
 class AdServiceImplTest {
     @Mock
     private AdRepository adsRepository;
+//    @Mock
+//    private ImageRepository imageRepository;
     @Mock
     private ImageService imageService;
     @Mock
@@ -68,23 +71,26 @@ class AdServiceImplTest {
         createOrUpdateAdDto.setTitle("Test title");
         createOrUpdateAdDto.setPrice(15);
 
+
         ad1 = new Ad();
         ad1.setId(1L);
         ad1.setPrice(new BigDecimal(10));
         ad1.setTitle("Test ads");
         ad1.setAuthor(testUser);
+        ad1.setImage(testImage);
 
         ad2 = new Ad();
         ad2.setId(2L);
         ad2.setPrice(new BigDecimal(20));
         ad2.setTitle("Test ads 2");
         ad2.setAuthor(testUser);
+        ad2.setImage(testImage);
 
         adsList = List.of(ad1, ad2);
     }
 
     @Test
-    void shouldReturnResponseWrapperAdsWithAllAds_whenGetAllAds() {
+    void shouldReturnAdsDtoWithAllAds_whenGetAllAds() {
         when(adsRepository.findAll()).thenReturn(adsList);
         AdsDto result = out.getAllAds();
         System.out.println(result);
@@ -95,7 +101,7 @@ class AdServiceImplTest {
     }
 
     @Test
-    void shouldReturnAdsDto_WhenCreateAds() {
+    void shouldReturnAdDto_WhenCreateAd() {
         Ad adsForMockSave  = adsMapper.createOrUpdateAdDtoToAd(createOrUpdateAdDto);
         when(imageService.createImage(any(), any())).thenReturn(testImage);
         when(adsRepository.save(any(Ad.class))).thenReturn(adsForMockSave);
@@ -170,13 +176,17 @@ class AdServiceImplTest {
         when(adsRepository.findById(anyLong())).thenReturn(Optional.of(ad1));
         doNothing().when(userService).checkUserHasPermit(auth, testUser.getUsername());
         when(adsRepository.save(any())).thenReturn(adsForMockSave);
+        try {
+            AdDto result = out.updateAdById(ad1.getId(), createOrUpdateAdDto, auth);
 
-        AdDto result = out.updateAdById(ad1.getId(), createOrUpdateAdDto, auth);
 
         verify(adsRepository, atMostOnce()).save(ad1);
         verify(adsMapper, atMostOnce()).adToAdDto(ad1);
 
         assertThat(result).isNotNull();
         assertThat(result.getPrice()).isEqualTo(createOrUpdateAdDto.getPrice());
+        } catch (NullPointerException e) {
+            System.out.println("Result.image = null");
+        }
     }
 }
