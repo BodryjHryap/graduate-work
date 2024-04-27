@@ -32,24 +32,37 @@ public class UserServiceImpl implements UserService {
         this.avatarRepository = avatarRepository;
         this.userMapper = userMapper;
     }
-
+    /**
+     * Получение пользователя из БД по имени/почте
+     */
     public User getUser(String username) {
         return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
+    /**
+     * Получение пользователя из БД по имени/почте и преобразование в объект класса UserDto
+     */
     @Override
     public UserDto getUserDtoByUsername(String username) {
         User user = getUser(username);
         return userMapper.userToUserDto(user);
     }
 
+    /**
+     * Метод, который возвращает авторизованного пользователя.
+     * <br><br> Используется объект SecurityContextHolder.
+     * <br> В нем мы храним информацию о текущем контексте безопасности приложения, который включает в себя информацию о пользователе работающем в настоящее время с приложением.
+     * @return возвращает объект пользователя UserDto
+     */
     @Override
     public UserDto getAuth() {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         UserDetails principalUser = (UserDetails) currentUser.getPrincipal();
         return userMapper.userToUserDto(userRepository.findByUsername(principalUser.getUsername()).get());
     }
-
+    /**
+     * Изменение пользователя
+     */
     @Override
     public UserDto updateUser(UserDto userDto) {
         UserDto currentUser = this.getAuth();
@@ -61,6 +74,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToUserDto(updatedUser);
     }
 
+    /**
+     * Изменение аватара пользователя
+     */
     @Override
     public void updateUserAvatar(String username, MultipartFile file) {
         if (file.isEmpty()) {
@@ -81,13 +97,18 @@ public class UserServiceImpl implements UserService {
 
         avatarRepository.save(avatar);
     }
-
+    /**
+     * Получение аватара пользователя
+     */
     @Override
     public byte[] getUserAvatar(long id) {
         Avatar avatar = avatarRepository.findById(id).orElseThrow(ImageNotFoundException::new);
         return avatar.getImage();
     }
 
+    /**
+     * Проверка прав пользователя
+     */
     @Override
     public void checkUserHasPermit(Authentication authentication, String username) {
         boolean matchUser = authentication.getName().equals(username);

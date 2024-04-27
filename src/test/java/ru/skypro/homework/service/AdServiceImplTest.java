@@ -130,7 +130,7 @@ class AdServiceImplTest {
     }
 
     @Test
-    void shouldReturnResponseWrapperAdsForUser_whenGetAllAdsForUser() {
+    void shouldReturnAdsForUser_whenGetAllAdsForUser() {
         when(adsRepository.findAdByAuthorUsername(any(String.class))).thenReturn(adsList);
         AdsDto result = out.getAllAdsForUser("Username");
 
@@ -175,7 +175,6 @@ class AdServiceImplTest {
         when(adsRepository.save(any())).thenReturn(adsForMockSave);
         try {
             AdDto result = out.updateAdById(ad1.getId(), createOrUpdateAdDto, auth);
-
 
             verify(adsRepository, atMostOnce()).save(ad1);
             verify(adsMapper, atMostOnce()).adToAdDto(ad1);

@@ -75,7 +75,7 @@ public class CommentServiceImplTest {
     }
 
     @Test
-    void shouldReturnResponseWrapperCommentWithAllCommentsForAd_whenGetAllCommentsForAdsWithId() {
+    void shouldReturnCommentsDtoWithAllCommentsForAd_whenGetAllCommentsForAdsWithId() {
         when(adService.getAdById(anyLong())).thenReturn(testAd);
 
         CommentsDto result = out.getAllCommentsForAd(testAd.getId());

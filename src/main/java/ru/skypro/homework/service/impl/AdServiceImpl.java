@@ -34,12 +34,18 @@ public class AdServiceImpl implements AdService {
         this.userService = userService;
     }
 
+    /**
+     * Получение всех объявлений
+     */
     @Override
     public AdsDto getAllAds() {
         List<Ad> adList = adRepository.findAll();
         return adMapper.adListToAdsDto(adList.size(), adList);
     }
 
+    /**
+     * Создание нового объявления
+     */
     @Override
     @Transactional
     public AdDto createAd(CreateOrUpdateAdDto createAdDto, MultipartFile image, Authentication authentication) {
@@ -51,12 +57,17 @@ public class AdServiceImpl implements AdService {
         savedAd.setImage(adImage);
         return adMapper.adToAdDto(savedAd);
     }
-
+    /**
+     * Получение объявления по Id
+     */
     @Override
     public Ad getAdById(long id) {
         return adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
     }
 
+    /**
+     * Удаление объявления
+     */
     @Override
     public void removeAd(long id, Authentication authentication) {
         Ad ad = getAdById(id);
@@ -64,12 +75,18 @@ public class AdServiceImpl implements AdService {
         adRepository.delete(ad);
     }
 
+    /**
+     * Получение полной информации об объявлении
+     */
     @Override
     public ExtendedAdDto getFullAdById(long id) {
         Ad ad = getAdById(id);
         return adMapper.adToExtendedAdDto(ad);
     }
 
+    /**
+     * Изменение объявления
+     */
     @Override
     public AdDto updateAdById(long id, CreateOrUpdateAdDto createOrUpdateAdDto, Authentication authentication) {
         Ad oldAd = getAdById(id);
@@ -84,6 +101,9 @@ public class AdServiceImpl implements AdService {
         return adMapper.adToAdDto(updatedAd);
     }
 
+    /**
+     * Получение всех объявлений пользователя
+     */
     @Override
     public AdsDto getAllAdsForUser(String username) {
         List<Ad> userAdsList = adRepository.findAdByAuthorUsername(username);

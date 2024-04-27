@@ -24,7 +24,13 @@ public class AuthServiceImpl implements AuthService {
         this.encoder = encoder;
         this.userRepository = userRepository;
     }
-
+    /**
+     * Авторизация пользователя
+     *
+     * @param userName Имя/почта пользователя
+     * @param password пароль пользователя
+     * @return возвращает boolean результат авторизации
+     */
     @Override
     public boolean login(String userName, String password) {
         if (!manager.userExists(userName)) {
@@ -33,7 +39,12 @@ public class AuthServiceImpl implements AuthService {
         UserDetails userDetails = manager.loadUserByUsername(userName);
         return encoder.matches(password, userDetails.getPassword());
     }
-
+    /**
+     * Регистрация нового пользователя
+     *
+     * @param registerDto новые учетные данные пользователя от клиента
+     * @return возвращает boolean результат регистрации
+     */
     @Override
     public boolean register(RegisterDto registerDto) {
         Optional<User> userByUsername = userRepository.findByUsername(registerDto.getUsername());
@@ -53,7 +64,11 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
         return true;
     }
-
+    /**
+     * Метод, который обновляет пароль от кабинета пользователя.
+     * <br> Используются метод класса {@link UserDetailsManager#changePassword(String, String)}
+     * @param newPasswordDto новый пароль
+     */
     @Override
     public void changePassword(NewPasswordDto newPasswordDto) {
         manager.changePassword(newPasswordDto.getCurrentPassword(), encoder.encode(newPasswordDto.getNewPassword()));

@@ -32,8 +32,6 @@ public class AdMapperTest {
         ad.setAuthor(testUser);
         ad.setImage(image);
 
-
-
         //when
         AdDto adDto = adMapper.adToAdDto(ad);
         System.out.println(adDto);
@@ -104,7 +102,7 @@ public class AdMapperTest {
     }
 
     @Test
-    public void shouldMapCreateAdDtoToAd() {
+    public void shouldMapCreateOrUpdateAdDtoToAd() {
         //given
         CreateOrUpdateAdDto createOrUpdateAdDto = new CreateOrUpdateAdDto();
         createOrUpdateAdDto.setDescription("Test description");

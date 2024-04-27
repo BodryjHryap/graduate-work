@@ -24,6 +24,9 @@ public class ImageServiceImpl implements ImageService {
         this.userService = userService;
     }
 
+    /**
+     * Создание нового изображения для объявления
+     */
     @Override
     public Image createImage(MultipartFile file, Ad ad) {
         Image image = new Image();
@@ -33,11 +36,17 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.save(image);
     }
 
+    /**
+     * Получение изображения по Id
+     */
     @Override
     public byte[] getAdImage(Long id) {
         return getImageFromDB(id).getData();
     }
 
+    /**
+     * Получение старого изображения по Id, изменение и сохранение
+     */
     @Override
     public byte[] updateAdImage(long id, MultipartFile file, Authentication authentication) {
         Image image = getImageFromDB(id);
@@ -47,6 +56,9 @@ public class ImageServiceImpl implements ImageService {
         return savedImage.getData();
     }
 
+    /**
+     * Преобразование файла в объект класса Image
+     */
     private void fileToImage(MultipartFile file, Image image) {
         if (file.isEmpty()) {
             throw new EmptyFileException();
@@ -61,7 +73,9 @@ public class ImageServiceImpl implements ImageService {
         image.setFileSize(file.getSize());
         image.setMediaType(file.getContentType());
     }
-
+    /**
+     * Получение изображения из БД
+     */
     private Image getImageFromDB(long id) {
         return imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
     }

@@ -32,6 +32,9 @@ public class CommentServiceImpl implements CommentService {
         this.userService = userService;
     }
 
+    /**
+     * Создание нового комментария
+     */
     @Override
     public CommentDto createNewComment(Long adId, CommentDto commentDto, Authentication authentication) {
         Ad adById = adService.getAdById(adId);
@@ -44,6 +47,9 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.commentToCommentDto(savedComment);
     }
 
+    /**
+     * Получение всех комментариев объявления
+     */
     @Override
     public CommentsDto getAllCommentsForAd(Long adsId) {
         Ad ad = adService.getAdById(adsId);
@@ -51,6 +57,9 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.commentListToCommentsDto(comments.size(), comments);
     }
 
+    /**
+     * Удаление комментария
+     */
     @Override
     public void deleteComment(long adPk, long id, Authentication authentication) {
         Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
@@ -58,6 +67,9 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.delete(comment);
     }
 
+    /**
+     * Редактирование комментария
+     */
     @Override
     public CommentDto updateComment(long adPk, long id, CommentDto commentDto, Authentication authentication) {
         Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
